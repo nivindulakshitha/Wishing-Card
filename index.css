@@ -22,7 +22,7 @@ body {
 	transition: 1s;
 }
 
-#card:hover {
+#card.open {
 	z-index: 1000;
 	transform: perspective(2000px) rotate(-10deg);
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
@@ -33,15 +33,16 @@ body {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	background-color: #fff;
 	border: 1px solid #eee;
 	box-sizing: border-box;
 	transform-origin: left;
 	z-index: 1;
 	transition: 1s;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	background-size: cover;
 }
 
-#card:hover #image-box {
+#card.open #image-box {
 	transform: rotateY(-135deg);
 }
 #card #image-box img {
