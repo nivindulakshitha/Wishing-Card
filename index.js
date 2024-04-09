@@ -16,3 +16,16 @@ $(document).ready(function () {
         glare: false,
     });
 });
+
+$(document).ready(function () {
+
+    // Detect device type and change video source accordingly
+    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    var videoElement = document.querySelector('video'); // replace 'video' with your video element's selector
+
+    if (isMobile) {
+        videoElement.src = './GDUP7Rm9ZOOr5NgCAJBFSaAPT_sXbmdjAAAF.mp4';
+    } else {
+        videoElement.src = './HQ video.mp4';
+    }
+});

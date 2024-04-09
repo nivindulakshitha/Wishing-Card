@@ -1,3 +1,18 @@
+@font-face {
+	font-family: "arundathee"; /* a name to be used later */
+	src: url("./UN-Arundathee.ttf"); /* URL to font */
+}
+
+@font-face {
+	font-family: "alakamanda"; /* a name to be used later */
+	src: url("./UN-Alakamanda-4-95.ttf"); /* URL to font */
+}
+
+@font-face {
+	font-family: "emanee"; /* a name to be used later */
+	src: url("./UN-IMANEE.TTF"); /* URL to font */
+}
+
 html,
 body {
 	margin: 0;
@@ -17,6 +32,55 @@ video {
 	object-fit: cover;
 }
 
+.welcome-text,
+.welcome-text div {
+	height: 100%;
+	width: 100%;
+	padding: 0px 100px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-direction: column;
+}
+
+.welcome-text div {
+	width: max-content;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+}
+
+.welcome-text h2 {
+	font-size: 5em;
+	color: #7b0100;
+	margin: 0;
+	padding: 0;
+	font-family: "arundathee";
+	font-weight: lighter;
+	text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-text h5 {
+	font-size: 3em;
+	letter-spacing: 5px;
+	color: #00987a;
+	margin: 0;
+	padding: 0;
+	font-family: "alakamanda";
+	text-shadow: 2px 2px 4px rgba(35, 189, 156, 0.3); /* added shadow */
+}
+
+.welcome-text h6 {
+	font-size: 1.5em;
+	color: #facf5b;
+	line-height: 3rem;
+	margin: 0;
+	padding: 0;
+	font-family: "emanee";
+	text-shadow: 2px 2px 4px rgba(29, 29, 29, 0.5);
+}
+
 .container {
 	height: 100vh;
 	overflow-x: auto;
@@ -25,14 +89,16 @@ video {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
+	padding-left: 100px;
 }
 
 #card {
 	position: relative;
 	background: #fff;
-	box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px,
-		rgba(0, 0, 0, 0.24) 0px -12px 30px, rgba(0, 0, 0, 0.24) 0px 4px 6px,
-		rgba(0, 0, 0, 0.34) 0px 12px 13px, rgba(0, 0, 0, 0.18) 0px -3px 5px;
+	box-shadow: rgba(255, 255, 255, 0.5) 0px 32px 25px,
+		rgba(255, 255, 255, 0.24) 0px -6px 15px,
+		rgba(255, 255, 255, 0.24) 0px 2px 3px, rgba(255, 255, 255, 0.34) 0px 6px 6px,
+		rgba(255, 255, 255, 0.18) 0px -1.5px 2.5px;
 	border-radius: 10px;
 	transform-style: preserve-3d;
 	transform: perspective(2000px);
@@ -40,13 +106,18 @@ video {
 	min-width: 350px;
 	min-height: 450px;
 	width: 350px;
+	height: 450px;
+	cursor: pointer;
 }
 
 #card.open {
 	margin-left: 25%;
 	z-index: 1000;
 	transform: perspective(2000px) rotate(-10deg);
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+	box-shadow: rgba(255, 255, 255, 0.25) 0px 32px 25px,
+		rgba(255, 255, 255, 0.12) 0px -6px 15px,
+		rgba(255, 255, 255, 0.12) 0px 2px 3px, rgba(255, 255, 255, 0.17) 0px 6px 6px,
+		rgba(255, 255, 255, 0.09) 0px -1.5px 2.5px;
 }
 
 #card #image-box {
@@ -60,19 +131,13 @@ video {
 	transform-origin: left;
 	z-index: 1;
 	transition: 1s;
+	background-image: url("./cover.jpg");
 	background-size: cover;
+	background-position: center center;
 }
 
 #card.open #image-box {
 	transform: rotateY(-135deg);
-}
-
-#card #image-box img {
-	position: relative;
-	top: 0;
-	left: 0;
-	width: 100%;
-	object-fit: cover;
 }
 
 #card #details-box {
@@ -82,11 +147,13 @@ video {
 	background: #fff;
 	box-sizing: border-box;
 	padding: 20px;
+	border-left: 2px solid rgb(180, 180, 180);
+	height: 100%;
 }
 
 @media screen and (max-width: 1180px) {
 	.container {
-		padding-left: 100px;
+		padding-left: 0px !important;
 	}
 }
 
