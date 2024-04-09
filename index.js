@@ -1,7 +1,14 @@
 $(document).ready(function () {
 
-    $("#card").click(function () {
-        $(this).toggleClass("open");
+    $(document).click(function (event) {
+        if (!$(event.target).closest('#card').length) {
+            $("video").style.filter = "blur(10px)";
+            $("#card").removeClass("open");
+        }
+    });
+
+    $("#card").click(function (event) {
+        $("#card").addClass("open");
     });
 
     $(".container").tilt({
@@ -28,4 +35,28 @@ $(document).ready(function () {
     } else {
         videoElement.src = './HQ video.mp4';
     }
+});
+
+$(document).ready(function () {
+    var audioElement = document.createElement('audio');
+    audioElement.src = './music.mp3';
+    audioElement.loop = true;
+    audioElement.play();
+    audioElement.addEventListener('timeupdate', function () {
+        var buffer = 1;
+        if (this.currentTime > this.duration - buffer) {
+            this.currentTime = 0;
+            this.play();
+        }
+    }, false);
+});
+
+$(document).ready(function () {
+    $(".container").hide();
+
+    $("button").click(function () {
+        $(".welcome-text").fadeOut("slow", function () {
+            $(".container").fadeIn("slow");
+        });
+    });
 });
