@@ -60,7 +60,7 @@ $(document).ready(function () {
     var videoElement = document.querySelector('video'); // replace 'video' with your video element's selector
 
     if (isMobile) {
-        videoElement.src = './GDUP7Rm9ZOOr5NgCAJBFSaAPT_sXbmdjAAAF.mp4';
+        videoElement.src = './LQ video.mp4';
     } else {
         videoElement.src = './HQ video.mp4';
     }
@@ -139,7 +139,7 @@ $(document).ready(function () {
         } else {
             console.log("URL doesn't contain the expected part.");
         }
-        
+
         $(".welcome-text").fadeOut("slow", function () {
             $(".container").fadeIn("slow");
         });
