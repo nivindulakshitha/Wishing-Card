@@ -157,10 +157,6 @@ div.cover {
 #card {
 	position: relative;
 	background: #fff;
-	box-shadow: rgba(255, 255, 255, 0.8) 0px 32px 25px,
-		rgba(255, 255, 255, 0.6) 0px -6px 15px, rgba(255, 255, 255, 0.6) 0px 2px 3px,
-		rgba(255, 255, 255, 0.8) 0px 6px 6px,
-		rgba(255, 255, 255, 0.6) 0px -1.5px 2.5px;
 	border-radius: 10px;
 	transform-style: preserve-3d;
 	transform: perspective(2000px);
@@ -198,10 +194,8 @@ div.cover {
 	background-image: url("./card.jpg");
 	background-size: cover;
 	background-position: center center;
-	box-shadow: rgba(255, 255, 255, 0.8) 0px 32px 25px,
-		rgba(255, 255, 255, 0.6) 0px -6px 15px, rgba(255, 255, 255, 0.6) 0px 2px 3px,
-		rgba(255, 255, 255, 0.8) 0px 6px 6px,
-		rgba(255, 255, 255, 0.6) 0px -1.5px 2.5px;
+	box-shadow: rgba(255, 255, 255, 0.8) 0px 15px 35px,
+		rgba(255, 255, 255, 0.6) 0px -6px 15px, rgba(255, 255, 255, 0.6) 0px 2px 3px;
 		border-top-right-radius: 16px;
 	border-bottom-right-radius: 16px;
 }
