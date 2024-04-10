@@ -218,7 +218,7 @@ var mylink = '';
 
 const newDocSubmit = async (username, title, message) => {
     await $.ajax({
-        url: 'http://localhost:8888/api/reg',
+        url: 'https://dsapi.netlify.app/api/reg',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -258,7 +258,7 @@ const getDoc = async (docId) => {
     console.log(docId)
     var doc = null;
     await $.ajax({
-        url: 'http://localhost:8888/api/find/',
+        url: 'https://dsapi.netlify.app/api/find/',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -278,7 +278,7 @@ const getDoc = async (docId) => {
 
 const updateLikes = async (docId, likes) => {
     await $.ajax({
-        url: 'http://localhost:8888/api/like/',
+        url: 'https://dsapi.netlify.app/api/like/',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({
