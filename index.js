@@ -16,7 +16,7 @@ $(document).ready(function () {
     $('img, video').on('dragstart', function () {
         return false;
     });
-    
+
     $(document).click(function (event) {
         if (!$(event.target).closest('#card').length) {
             $("#card").removeClass("open");
@@ -110,7 +110,7 @@ $(document).ready(function () {
                     "filter": "blur(" + this.blurRadius + "px)"
                 });
             }
-        }); 
+        });
     });
 
     $("button#go-back").click(function () {
@@ -236,7 +236,7 @@ const newDocSubmit = async (username, title, message) => {
         }),
         success: function (response) {
             alert('සුභ පැතුම් පත සාර්ථකව නිර්මාණය කරන ලදි. එහි යොමුව පිටපත් කරගෙන බෙදා හරින්න.');
-            mylink = "http://192.168.1.2:5500/#" + response.id;
+            mylink = "https://hasna.netlify.app/#" + response.id;
             copyToClipboard(mylink)
         },
         error: function (error) {
