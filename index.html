@@ -19,13 +19,18 @@
 
     <div class="welcome-text">
         <div>
-            <img src="" alt="" id="logo">
+            <img src="./hasna.png" alt="" id="logo">
             <h2>සෞභාග්‍ය සපිරි</h2>
             <h5>ප්‍රීතිමත් නව වසරකට සුභාසිරි!</h5>
             <h6>ශ්‍රී සුමංගල දහම් පාසල - පිඹුරුවැල්ලේගම</h6>
-            <button id="card-opener" style="display: none;">
-                සුභ පැතුම බලන්න
-            </button>
+            <footer>
+                <button id="card-opener" style="display: none;">
+                    සුභ පැතුම බලන්න
+                </button>
+                <button id="card-creator">
+                    මගේ සුභ පැතුම
+                </button>
+            </footer>
         </div>
     </div>
     <div class="container" style="display: none;">
@@ -35,12 +40,14 @@
             <div id="details-box" class="preview">
                 <input type="text" name="title" placeholder="මාතෘකාව" value="සුභ අලුත් අවුරුද්දක් වේවා!" required autocomplete="off"
                     spellcheck="false">
-                <textarea name="message" placeholder="සුභ පැතුම් පණිවිඩය" cols="30" rows="8" required autocomplete="off"
+                <textarea name="message" placeholder="සුභ පැතුම් පණිවිඩය" cols="30" rows="6" required autocomplete="off"
                     spellcheck="false"></textarea>
-                <input type="text" name="name" placeholder="ඔබේ නම" autocomplete="off" spellcheck="false">
+                <input type="text" name="name" placeholder="ඔබේ නම" autocomplete="off" spellcheck="false" required autocomplete="off"
+                    spellcheck="false">
                 <div>
                     <button type="submit" id="create">මගේ සුභ පැතුම</button>
                     <button type="submit" id="share" style="display: none;">නිර්මාණය කරන්න</button>
+                    <button type="submit" id="go-back">ආපසු</button>
                     <div id="likes-count">
                         <svg id="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
@@ -50,6 +57,10 @@
                         </svg>
                         <span>25</span>
                     </div>
+                </div>
+                <div>
+                    <img src="./Badge.png" width="15%" alt="">
+                    <img src="./hasna.png" width="25%" alt="">
                 </div>
             </div>
         </div>

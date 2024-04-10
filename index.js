@@ -1,23 +1,22 @@
+var currentDoc = null;
+
 $(document).ready(function () {
     const docId = window.location.hash.substring(1);
-    
+
     if (docId !== "") {
-        getDoc(docId).then((doc) => { 
-            if (doc) {
-                $("#card-opener").show();
-                $("#details-box").find("[name='title']").val(doc.doc.title);
-                $("#details-box").find("textarea").val(doc.doc.message);
-                $("#details-box").find("[name='name']").val(doc.doc.username);
-                $("#likes-count").find("span").text(doc.doc.likes);
-                $("#details-box").addClass("preview");
-            } else {
-                $("card-opener").hide();
-            }
-         });
+        updateDoc(docId)
     } else {
         console.log("URL doesn't contain the expected part.");
     }
 
+    $('img, video').on('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
+    $('img, video').on('dragstart', function () {
+        return false;
+    });
+    
     $(document).click(function (event) {
         if (!$(event.target).closest('#card').length) {
             $("#card").removeClass("open");
@@ -40,12 +39,16 @@ $(document).ready(function () {
         glare: false,
     });
 
-    $('#heart').on('click', function () {
+    $('#heart').on('click', async function () {
         var fill = $(this).attr('fill');
         if (fill == 'none') {
             $(this).attr('fill', 'red');
+            await updateLikes(currentDoc._id, true);
+            updateDoc(currentDoc._id)
         } else {
             $(this).attr('fill', 'none');
+            await updateLikes(currentDoc._id, false);
+            updateDoc(currentDoc._id)
         }
     });
 });
@@ -91,6 +94,42 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $(".container").hide();
+
+    $("button#card-creator").click(function () {
+        $(".welcome-text").fadeOut("slow", function () {
+            $(".container").fadeIn("slow");
+            $("#create").click();
+        });
+
+        $({ blurRadius: 0 }).animate({ blurRadius: 1 }, {
+            duration: 1000,
+            easing: 'swing', // or another easing function
+            step: function () {
+                $('video').css({
+                    "-webkit-filter": "blur(" + this.blurRadius + "px)",
+                    "filter": "blur(" + this.blurRadius + "px)"
+                });
+            }
+        }); 
+    });
+
+    $("button#go-back").click(function () {
+        $("#card").removeClass("open");
+        $(".container").fadeOut("slow", function () {
+            $(".welcome-text").fadeIn("slow");
+        });
+
+        $({ blurRadius: 1 }).animate({ blurRadius: 0 }, {
+            duration: 1000,
+            easing: 'swing', // or another easing function
+            step: function () {
+                $('video').css({
+                    "-webkit-filter": "blur(" + this.blurRadius + "px)",
+                    "filter": "blur(" + this.blurRadius + "px)"
+                });
+            }
+        });
+    });
 
     $("button#card-opener").click(function () {
         $(".welcome-text").fadeOut("slow", function () {
@@ -147,14 +186,11 @@ $(document).ready(function () {
 
         $("#create").hide();
         $("#share").show();
-        /* alert("ඔබේ සුභ පැතුම් පත නිර්මාණය කර අවසන්. එහි යොමුව පිටපත් කරගෙන බෙදා හරින්න.");
-        var textToCopy = 'Your text to copy'; */
-        /*  */
     });
 
     $("#share").on('click', async function () {
         var allFilled = true;
-        $("#details-box").find("input[name='title'], textarea").each(function () {
+        $("#details-box").find("input[name='title'], textarea, input[name='name']").each(function () {
             if ($(this).val() === '') {
                 $(this).css('border-color', 'red');
                 allFilled = false;
@@ -167,14 +203,13 @@ $(document).ready(function () {
             return;
         }
 
-        $("#details-box").addClass("preview");
         $("#share").html('නිර්මාණය කරමින්...');
         if (mylink === '') {
             await newDocSubmit($("input[name='name']").val(), $("input[name='title']").val(), $("textarea[name='message']").val());
         } else {
             copyToClipboard(mylink);
         }
-        $("#share").html('යොමුව පිටපත් කරන්න');
+        $("#share").html('යොමුව පිටපත් කරගන්න');
     });
 
 });
@@ -198,6 +233,23 @@ const newDocSubmit = async (username, title, message) => {
         },
         error: function (error) {
             alert('නිර්මාණය කිරීමට නොහැකි විය. නැවත උත්සහ කරන්න.');
+            $("#share").html('නිර්මාණය කරන්න');
+        }
+    });
+}
+
+const updateDoc = async (docId) => {
+    getDoc(docId).then((doc) => {
+        if (doc) {
+            currentDoc = doc.doc;
+            $("#card-opener").show();
+            $("#details-box").find("[name='title']").val(doc.doc.title);
+            $("#details-box").find("textarea").val(doc.doc.message);
+            $("#details-box").find("[name='name']").val(doc.doc.username);
+            $("#likes-count").find("span").text(doc.doc.likes);
+            $("#details-box").addClass("preview");
+        } else {
+            $("card-opener").hide();
         }
     });
 }
@@ -222,6 +274,27 @@ const getDoc = async (docId) => {
     return doc;
 }
 
+
+
+const updateLikes = async (docId, likes) => {
+    await $.ajax({
+        url: 'http://localhost:8888/api/like/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            docId: docId,
+            likes: likes ? 1 : -1
+        }),
+        success: function (response) {
+            $("#likes-count").find("span").text(response.likes);
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+
+}
+
 function nameFormater(name) {
     return "- " + name.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); })
 }
@@ -234,8 +307,12 @@ const copyToClipboard = (text) => {
 
     try {
         var successful = document.execCommand('copy');
-        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න.' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
+        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න. ඔබේ නිර්මාණය වෙත් ඔබව ගෙන යනු ඇති.' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
         alert(message);
+        if (successful) {
+            window.location.assign(mylink);
+            window.location.reload();
+        }
     } catch (error) {
         console.error('Unable to copy text: ', error);
         alert('යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.');

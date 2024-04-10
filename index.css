@@ -78,7 +78,13 @@ video {
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(3.7px);
 	-webkit-backdrop-filter: blur(3.7px);
-	border: 1px solid rgba(255, 255, 255, 1);
+	border: 3px solid rgba(255, 255, 255, 1);
+}
+
+.welcome-text footer {
+	display: flex;
+	justify-content: space-around;
+	gap: 30px;
 }
 
 .welcome-text h2 {
@@ -94,7 +100,7 @@ video {
 .welcome-text h5 {
 	font-size: 3em;
 	letter-spacing: 5px;
-	color: #00987a;
+	color: #ff7837;
 	margin: 0;
 	padding: 0;
 	font-family: "alakamanda";
@@ -172,6 +178,9 @@ video {
 }
 
 #card #details-box {
+	    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -195,6 +204,14 @@ video {
 	align-items: center;
 	align-content: center;
 }
+
+#card #details-box div:last-child {
+	position: relative;
+	bottom: 0px;
+	justify-content: center;
+	gap: 20px;
+}
+
 #card #details-box div #likes-count {
 	display: flex;
 	gap: 5px;
