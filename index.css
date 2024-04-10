@@ -189,10 +189,29 @@ video {
 	font-size: x-large;
 }
 
+#card #details-box div {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	align-content: center;
+}
+#card #details-box div #likes-count {
+	display: flex;
+	gap: 5px;
+	font-size: xx-large;
+	font-family: "emanee";
+	color: #333;
+	scale: 0.8;
+}
+
 #card #details-box.preview input,
 #card #details-box.preview textarea {
 	pointer-events: none;
 	border: none;
+}
+
+#card #details-box[class=""] div #likes-count {
+	display: none;
 }
 
 button {
@@ -316,7 +335,7 @@ textarea {
 }
 @media screen and (max-width: 380px) {
 	.welcome-text div {
-		transform: scale(0.3);
+		transform: scale(0.55);
 	}
 }
 #heart {
@@ -339,9 +358,3 @@ textarea {
 	}
 }
 
-@media screen and (max-width: 380px) {
-	#heart {
-		width: 20px;
-		height: 20px;
-	}
-}

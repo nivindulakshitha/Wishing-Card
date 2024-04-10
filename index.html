@@ -23,7 +23,7 @@
             <h2>සෞභාග්‍ය සපිරි</h2>
             <h5>ප්‍රීතිමත් නව වසරකට සුභාසිරි!</h5>
             <h6>ශ්‍රී සුමංගල දහම් පාසල - පිඹුරුවැල්ලේගම</h6>
-            <button id="card-opener">
+            <button id="card-opener" style="display: none;">
                 සුභ පැතුම බලන්න
             </button>
         </div>
@@ -32,25 +32,25 @@
         <div id="card">
             <div id="image-box">
             </div>
-            <div id="details-box" class="">
-                <form action="" method="post">
-                    <input type="text" name="title" placeholder="මාතෘකාව" value="සුභ අලුත් අවුරුද්දක් වේවා!" required>
-                    <textarea name="message" placeholder="සුභ පැතුම් පණිවිඩය" cols="30" rows="8" required></textarea>
-                    <input type="text" name="name" placeholder="ඔබේ නම">
-                    <div>
-                        <button type="submit" id="share">බෙදා හරින්න</button>
-                        <div id="likes-count">
-                            <svg id="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                class="feather feather-heart">
-                                <path
-                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
-                                </path>
-                            </svg>
-                            <span>25</span>
-                        </div>
+            <div id="details-box" class="preview">
+                <input type="text" name="title" placeholder="මාතෘකාව" value="සුභ අලුත් අවුරුද්දක් වේවා!" required autocomplete="off"
+                    spellcheck="false">
+                <textarea name="message" placeholder="සුභ පැතුම් පණිවිඩය" cols="30" rows="8" required autocomplete="off"
+                    spellcheck="false"></textarea>
+                <input type="text" name="name" placeholder="ඔබේ නම" autocomplete="off" spellcheck="false">
+                <div>
+                    <button type="submit" id="create">මගේ සුභ පැතුම</button>
+                    <button type="submit" id="share" style="display: none;">නිර්මාණය කරන්න</button>
+                    <div id="likes-count">
+                        <svg id="heart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart">
+                            <path
+                                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                            </path>
+                        </svg>
+                        <span>25</span>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

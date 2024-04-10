@@ -1,4 +1,22 @@
 $(document).ready(function () {
+    const docId = window.location.hash.substring(1);
+    
+    if (docId !== "") {
+        getDoc(docId).then((doc) => { 
+            if (doc) {
+                $("#card-opener").show();
+                $("#details-box").find("[name='title']").val(doc.doc.title);
+                $("#details-box").find("textarea").val(doc.doc.message);
+                $("#details-box").find("[name='name']").val(doc.doc.username);
+                $("#likes-count").find("span").text(doc.doc.likes);
+                $("#details-box").addClass("preview");
+            } else {
+                $("card-opener").hide();
+            }
+         });
+    } else {
+        console.log("URL doesn't contain the expected part.");
+    }
 
     $(document).click(function (event) {
         if (!$(event.target).closest('#card').length) {
@@ -115,26 +133,113 @@ $(document).ready(function () {
         });
     });
 
-    $("#share").on('click', function () {
-        var button = $(this);
-        button.html('නිර්මාණය කරමින්...');
-        alert("ඔබේ සුභ පැතුම් පත නිර්මාණය කර අවසන්. එහි යොමුව පිටපත් කරගෙන බෙදා හරින්න.");
-        var textToCopy = 'Your text to copy';
-        var textarea = document.createElement('textarea');
-        textarea.value = textToCopy;
-        document.body.appendChild(textarea);
-        textarea.select();
+    $("#create").on('click', function () {
+        $("#details-box").removeClass("preview");
+        $("#details-box").find("[name='title'], textarea, [name='name']").val('');
 
-        try {
-            var successful = document.execCommand('copy');
-            var message = successful ? 'Text copied successfully.' : 'Copying failed. Please try again.';
-            alert(message);
-        } catch (error) {
-            console.error('Unable to copy text: ', error);
-            alert('Copying failed. Please try again.');
+        $("#details-box").find("input[name='title'], textarea").each(function () {
+            if ($(this).val() === '') {
+                $(this).css('border-color', 'red');
+            } else {
+                $(this).css('border-color', '#ccc');
+            }
+        });
+
+        $("#create").hide();
+        $("#share").show();
+        /* alert("ඔබේ සුභ පැතුම් පත නිර්මාණය කර අවසන්. එහි යොමුව පිටපත් කරගෙන බෙදා හරින්න.");
+        var textToCopy = 'Your text to copy'; */
+        /*  */
+    });
+
+    $("#share").on('click', async function () {
+        var allFilled = true;
+        $("#details-box").find("input[name='title'], textarea").each(function () {
+            if ($(this).val() === '') {
+                $(this).css('border-color', 'red');
+                allFilled = false;
+            } else {
+                $(this).css('border-color', '#ccc');
+            }
+        });
+
+        if (!allFilled) {
+            return;
         }
 
-        document.body.removeChild(textarea);
+        $("#details-box").addClass("preview");
+        $("#share").html('නිර්මාණය කරමින්...');
+        if (mylink === '') {
+            await newDocSubmit($("input[name='name']").val(), $("input[name='title']").val(), $("textarea[name='message']").val());
+        } else {
+            copyToClipboard(mylink);
+        }
+        $("#share").html('යොමුව පිටපත් කරන්න');
     });
 
 });
+
+var mylink = '';
+
+const newDocSubmit = async (username, title, message) => {
+    await $.ajax({
+        url: 'http://localhost:8888/api/reg',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            username: nameFormater(username.trim()),
+            title: title.trim(),
+            message: message.trim()
+        }),
+        success: function (response) {
+            alert('සුභ පැතුම් පත සාර්ථකව නිර්මාණය කරන ලදි. එහි යොමුව පිටපත් කරගෙන බෙදා හරින්න.');
+            mylink = "http://192.168.1.2:5500/#" + response.id;
+            copyToClipboard(mylink)
+        },
+        error: function (error) {
+            alert('නිර්මාණය කිරීමට නොහැකි විය. නැවත උත්සහ කරන්න.');
+        }
+    });
+}
+
+const getDoc = async (docId) => {
+    console.log(docId)
+    var doc = null;
+    await $.ajax({
+        url: 'http://localhost:8888/api/find/',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            docId: docId
+        }),
+        success: function (response) {
+            doc = response;
+        },
+        error: function (error) {
+            console.error(error);
+        }
+    });
+    return doc;
+}
+
+function nameFormater(name) {
+    return "- " + name.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); })
+}
+
+const copyToClipboard = (text) => {
+    var textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+        var successful = document.execCommand('copy');
+        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න.' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
+        alert(message);
+    } catch (error) {
+        console.error('Unable to copy text: ', error);
+        alert('යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.');
+    }
+
+    document.body.removeChild(textarea);
+}
