@@ -9,11 +9,11 @@ $(document).ready(function () {
         console.log("URL doesn't contain the expected part.");
     }
 
-    $('img, video').on('contextmenu', function (e) {
+    $('img').on('contextmenu', function (e) {
         e.preventDefault();
     });
 
-    $('img, video').on('dragstart', function () {
+    $('img').on('dragstart', function () {
         return false;
     });
 
@@ -51,87 +51,41 @@ $(document).ready(function () {
             updateDoc(currentDoc._id)
         }
     });
-});
-
-$(document).ready(function () {
-
-    // Detect device type and change video source accordingly
-    var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    var videoElement = document.querySelector('video'); // replace 'video' with your video element's selector
-
-    if (isMobile) {
-        videoElement.src = './LQ video.mp4';
-    } else {
-        videoElement.src = './HQ video.mp4';
-    }
-});
-
-$(document).ready(function () {
-    // Create audio element
-    var audioElement = document.createElement('audio');
-    audioElement.src = './music.mp3';
-    audioElement.loop = true;
-
-    // Function to play audio
-    function playAudio() {
-        audioElement.play();
-        // Add timeupdate event listener to handle loop
-        audioElement.addEventListener('timeupdate', function () {
-            var buffer = 1;
-            if (this.currentTime > this.duration - buffer) {
-                this.currentTime = 0;
-                this.play();
-            }
-        }, false);
-        // Remove the event listener after audio starts playing
-        $(document).off('click', playAudio);
-    }
-
-    // Add click event listener to play audio
-    $(document).on('click', playAudio);
-});
-
-
-$(document).ready(function () {
     $(".container").hide();
 
-    $("button#card-creator").click(function () {
-        $(".welcome-text").fadeOut("slow", function () {
-            $(".container").fadeIn("slow");
-            $("#create").click();
+    $("button#card-creator").click(async function () {
+        /* $(".welcome-text").css("display", "none");
+        $(".container").css("display", "flex"); */
+        await fadeOut(document.querySelector(".welcome-text")).then(() => {
+            fadeIn(document.querySelector(".container"));
         });
 
-        $({ blurRadius: 0 }).animate({ blurRadius: 1 }, {
-            duration: 1000,
-            easing: 'swing', // or another easing function
-            step: function () {
-                $('video').css({
-                    "-webkit-filter": "blur(" + this.blurRadius + "px)",
-                    "filter": "blur(" + this.blurRadius + "px)"
-                });
-            }
+        $("#create").click();
+
+        $('img.cover').css({
+            "-webkit-filter": "blur(5px)",
+            "filter": "blur(5px)"
         });
     });
 
-    $("button#go-back").click(function () {
+    $("button#go-back").click(async function () {
         $("#card").removeClass("open");
-        $(".container").fadeOut("slow", function () {
-            $(".welcome-text").fadeIn("slow");
+        /*  $(".container").css("display", "none");
+         $(".welcome-text").css("display", "flex"); */
+
+        await fadeOut(document.querySelector(".container")).then(async () => {
+            window.location.reload();
+            await fadeIn(document.querySelector(".welcome-text")).then(() => {
+            });
         });
 
-        $({ blurRadius: 1 }).animate({ blurRadius: 0 }, {
-            duration: 1000,
-            easing: 'swing', // or another easing function
-            step: function () {
-                $('video').css({
-                    "-webkit-filter": "blur(" + this.blurRadius + "px)",
-                    "filter": "blur(" + this.blurRadius + "px)"
-                });
-            }
+        $('img.cover').css({
+            "-webkit-filter": "blur(0px)",
+            "filter": "blur(0px)"
         });
     });
 
-    $("button#card-opener").click(function () {
+    $("button#card-opener").click(async function () {
         const docId = window.location.hash.substring(1);
 
         if (docId !== "") {
@@ -140,44 +94,39 @@ $(document).ready(function () {
             console.log("URL doesn't contain the expected part.");
         }
 
-        $(".welcome-text").fadeOut("slow", function () {
-            $(".container").fadeIn("slow");
+        /* $(".welcome-text").css("display", "none");
+        $(".container").css("display", "flex"); */
+
+        await fadeOut(document.querySelector(".welcome-text")).then(() => {
+            fadeIn(document.querySelector(".container"));
         });
 
-        $({ blurRadius: 0 }).animate({ blurRadius: 1 }, {
-            duration: 1000,
-            easing: 'swing', // or another easing function
-            step: function () {
-                $('video').css({
-                    "-webkit-filter": "blur(" + this.blurRadius + "px)",
-                    "filter": "blur(" + this.blurRadius + "px)"
-                });
-            }
+        $('img.cover').css({
+            "-webkit-filter": "blur(5px)",
+            "filter": "blur(5px)"
         });
     });
 
-    $(document).ready(function () {
-        $("input[name='title']").on('input', function () {
-            var input = $(this);
-            if (input.val().length > 26) {
-                input.css('border-color', 'red');
-                input.val(input.val().substring(0, 26)); // limit the input to 26 characters
-                alert('අකුරු ප්‍රමාණය සීමා කර ඇත.'); // notify the user
-            } else {
-                input.css('border-color', '#aaa');
-            }
-        });
+    $("input[name='title']").on('input', function () {
+        var input = $(this);
+        if (input.val().length > 26) {
+            input.css('border-color', 'red');
+            input.val(input.val().substring(0, 26)); // limit the input to 26 characters
+            alert('අකුරු ප්‍රමාණය සීමා කර ඇත.'); // notify the user
+        } else {
+            input.css('border-color', '#aaa');
+        }
+    });
 
-        $("textarea[name='message']").on('input', function () {
-            var input = $(this);
-            if (input.val().length > 300) {
-                input.css('border-color', 'red');
-                input.val(input.val().substring(0, 300)); // limit the input to 26 characters
-                alert('අකුරු ප්‍රමාණය සීමා කර ඇත.'); // notify the user
-            } else {
-                input.css('border-color', '#aaa');
-            }
-        });
+    $("textarea[name='message']").on('input', function () {
+        var input = $(this);
+        if (input.val().length > 300) {
+            input.css('border-color', 'red');
+            input.val(input.val().substring(0, 300)); // limit the input to 26 characters
+            alert('අකුරු ප්‍රමාණය සීමා කර ඇත.'); // notify the user
+        } else {
+            input.css('border-color', '#aaa');
+        }
     });
 
     $("#create").on('click', function () {
@@ -269,7 +218,6 @@ const formatLikes = (likes) => {
     return likes;
 }
 
-
 const getDoc = async (docId) => {
     console.log(docId)
     var doc = null;
@@ -290,8 +238,6 @@ const getDoc = async (docId) => {
     return doc;
 }
 
-
-
 const updateLikes = async (docId, likes) => {
     await $.ajax({
         url: 'https://dsapi.netlify.app/api/like/',
@@ -308,7 +254,6 @@ const updateLikes = async (docId, likes) => {
             console.error(error);
         }
     });
-
 }
 
 function nameFormater(name) {
@@ -323,10 +268,9 @@ const copyToClipboard = (text) => {
 
     try {
         var successful = document.execCommand('copy');
-        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න. ඔබේ නිර්මාණය වෙත ඔබව ගෙන යනු ඇති.' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
+        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
         alert(message);
         if (successful) {
-            window.location.assign(mylink);
             window.location.reload();
         }
     } catch (error) {
@@ -336,3 +280,50 @@ const copyToClipboard = (text) => {
 
     document.body.removeChild(textarea);
 }
+
+async function fadeIn(element) {
+    element.style.display = 'flex'; // Change display property to flex
+    element.style.opacity = 0;
+
+    return new Promise((resolve) => {
+        function fade() {
+            let currentOpacity = parseFloat(element.style.opacity);
+            if (currentOpacity >= 1) {
+                resolve();
+                return;
+            }
+            element.style.opacity = currentOpacity + 0.1;
+            requestAnimationFrame(fade);
+        }
+        fade();
+    });
+}
+
+async function fadeOut(element) {
+    element.style.opacity = 1;
+
+    return new Promise((resolve) => {
+        function fade() {
+            let currentOpacity = parseFloat(element.style.opacity);
+            if (currentOpacity <= 0) {
+                element.style.display = 'none';
+                resolve();
+                return;
+            }
+            element.style.opacity = currentOpacity - 0.1;
+            requestAnimationFrame(fade);
+        }
+        fade();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    var audio = document.getElementsByTagName('audio')[0];
+    audio.play();
+    document.removeEventListener('DOMContentLoaded', arguments.callee);
+});
+
+document.addEventListener('click', function (event) {
+    document.getElementsByTagName('audio')[0].play();
+    event.preventDefault();
+})
