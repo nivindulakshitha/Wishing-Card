@@ -199,7 +199,10 @@ const updateDoc = async (docId) => {
     getDoc(docId).then((doc) => {
         if (doc) {
             currentDoc = doc.doc;
-            $("#card-opener").show();
+            $("#card-opener").css({
+                "opacity": "1",
+                "pointer-events": "auto"
+            });
             $("#details-box").find("[name='title']").val(doc.doc.title);
             $("#details-box").find("textarea").val(doc.doc.message);
             $("#details-box").find("[name='name']").val(doc.doc.username);
