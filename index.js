@@ -132,6 +132,14 @@ $(document).ready(function () {
     });
 
     $("button#card-opener").click(function () {
+        const docId = window.location.hash.substring(1);
+
+        if (docId !== "") {
+            updateDoc(docId)
+        } else {
+            console.log("URL doesn't contain the expected part.");
+        }
+        
         $(".welcome-text").fadeOut("slow", function () {
             $(".container").fadeIn("slow");
         });
@@ -246,13 +254,21 @@ const updateDoc = async (docId) => {
             $("#details-box").find("[name='title']").val(doc.doc.title);
             $("#details-box").find("textarea").val(doc.doc.message);
             $("#details-box").find("[name='name']").val(doc.doc.username);
-            $("#likes-count").find("span").text(doc.doc.likes);
+            $("#likes-count").find("span").text(formatLikes(doc.doc.likes));
             $("#details-box").addClass("preview");
         } else {
             $("card-opener").hide();
         }
     });
 }
+
+const formatLikes = (likes) => {
+    if (likes >= 1 && likes <= 9) {
+        return '0' + likes;
+    }
+    return likes;
+}
+
 
 const getDoc = async (docId) => {
     console.log(docId)
@@ -307,7 +323,7 @@ const copyToClipboard = (text) => {
 
     try {
         var successful = document.execCommand('copy');
-        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න. ඔබේ නිර්මාණය වෙත් ඔබව ගෙන යනු ඇති.' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
+        var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න. ඔබේ නිර්මාණය වෙත ඔබව ගෙන යනු ඇති.' : 'යොමුව පිටපත් කිරීමට අසමත් විය. නැවත උත්සහ කරන්න.';
         alert(message);
         if (successful) {
             window.location.assign(mylink);

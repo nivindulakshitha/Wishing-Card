@@ -223,7 +223,6 @@ video {
 
 #card #details-box.preview input,
 #card #details-box.preview textarea {
-	pointer-events: none;
 	border: none;
 }
 
@@ -272,7 +271,7 @@ input[type="text"] {
 	margin-bottom: 10px;
 	transition: border-color 0.3s ease;
 	font-family: "gurulugomi";
-	text-shadow: 0 0 5px white;
+	text-shadow: 0 0 10px white;
 }
 
 input[type="text"]:focus {
@@ -327,7 +326,7 @@ textarea {
 	}
 
 	.welcome-text div {
-		background: rgba(255, 255, 255, 0.65);
+		background: rgba(255, 255, 255, 0.7);
 	}
 }
 
