@@ -145,6 +145,41 @@ $(document).ready(function () {
         $("#share").show();
     });
 
+    $("input[name='title']").on('input', function () {
+        if ($(this).val() === '') {
+            $(this).css('border-color', 'red');
+        } else {
+            $(this).css('border-color', '#ccc');
+        }
+    });
+
+    $("textarea").on('input', function () {
+        if ($(this).val() === '') {
+            $(this).css('border-color', 'red');
+        } else {
+            $(this).css('border-color', '#ccc');
+        }
+    });
+
+    $("input[name='name']").on('input', function () {
+        if ($(this).val() === '') {
+            $(this).css('border-color', 'red');
+        } else {
+            $(this).css('border-color', '#ccc');
+        }
+    });
+
+    $("#card-creator").on('click', function () {
+        $("#details-box").find("input[name='title'], textarea, input[name='name']").each(function () {
+            if ($(this).val() === '') {
+                $(this).css('border-color', 'red');
+                allFilled = false;
+            } else {
+                $(this).css('border-color', '#ccc');
+            }
+        });
+    });
+
     $("#share").on('click', async function () {
         var allFilled = true;
         $("#details-box").find("input[name='title'], textarea, input[name='name']").each(function () {
