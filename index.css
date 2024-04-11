@@ -87,7 +87,7 @@ div.cover {
 	box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 	backdrop-filter: blur(20px) !important;
 	-webkit-backdrop-filter: blur(20px) !important;
-	border: 3px solid rgba(255, 255, 255, 0.1);
+	border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 .overlay {
@@ -113,7 +113,7 @@ div.cover {
 
 .welcome-text h2 {
 	font-size: 5em;
-	color: #ffdd2a;
+	color: #feb113;
 	margin: 0;
 	padding: 0;
 	font-family: "arundathee";
@@ -186,7 +186,7 @@ div.cover {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	background-color: #fff;
+	background-color: #ca2826;
 	box-sizing: border-box;
 	transform-origin: left;
 	z-index: 1;
