@@ -161,7 +161,9 @@ $(document).ready(function () {
     });
 
     $("#create").on('click', function () {
+        $("#details-box").removeClass("preview")
         $("#details-box").find("input[name='title'], textarea, input[name='name']").each(function () {
+            $(this).val('');
             if ($(this).val() === '') {
                 $(this).css('border-color', 'red');
                 allFilled = false;
