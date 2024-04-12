@@ -6,6 +6,7 @@ $(document).ready(function () {
     if (docId !== "") {
         updateDoc(docId)
     } else {
+        $("#card-opener").hide();
         console.log("URL doesn't contain the expected part.");
     }
 
@@ -54,8 +55,6 @@ $(document).ready(function () {
     $(".container").hide();
 
     $("button#card-creator").click(async function () {
-        /* $(".welcome-text").css("display", "none");
-        $(".container").css("display", "flex"); */
         await fadeOut(document.querySelector(".welcome-text")).then(() => {
             fadeIn(document.querySelector(".container"));
         });
@@ -70,9 +69,6 @@ $(document).ready(function () {
 
     $("button#go-back").click(async function () {
         $("#card").removeClass("open");
-        /*  $(".container").css("display", "none");
-         $(".welcome-text").css("display", "flex"); */
-
         await fadeOut(document.querySelector(".container")).then(async () => {
             window.location.reload();
             await fadeIn(document.querySelector(".welcome-text")).then(() => {
@@ -129,22 +125,6 @@ $(document).ready(function () {
         }
     });
 
-    $("#create").on('click', function () {
-        $("#details-box").removeClass("preview");
-        $("#details-box").find("[name='title'], textarea, [name='name']").val('');
-
-        $("#details-box").find("input[name='title'], textarea").each(function () {
-            if ($(this).val() === '') {
-                $(this).css('border-color', 'red');
-            } else {
-                $(this).css('border-color', '#ccc');
-            }
-        });
-
-        $("#create").hide();
-        $("#share").show();
-    });
-
     $("input[name='title']").on('input', function () {
         if ($(this).val() === '') {
             $(this).css('border-color', 'red');
@@ -170,6 +150,17 @@ $(document).ready(function () {
     });
 
     $("#card-creator").on('click', function () {
+        $("#details-box").removeClass("preview")
+        $("#details-box").find("input[name='title'], textarea, input[name='name']").each(function () {
+            if ($(this).val() === '') {
+                $(this).css('border-color', 'red');
+            } else {
+                $(this).css('border-color', '#ccc');
+            }
+        });
+    });
+
+    $("#create").on('click', function () {
         $("#details-box").find("input[name='title'], textarea, input[name='name']").each(function () {
             if ($(this).val() === '') {
                 $(this).css('border-color', 'red');
@@ -178,6 +169,9 @@ $(document).ready(function () {
                 $(this).css('border-color', '#ccc');
             }
         });
+
+        $("#create").hide();
+        $("#share").show();
     });
 
     $("#share").on('click', async function () {
@@ -238,13 +232,14 @@ const updateDoc = async (docId) => {
                 "opacity": "1",
                 "pointer-events": "auto"
             });
+            $("#card-opener").html("සුභ පැතුම බලන්න");
             $("#details-box").find("[name='title']").val(doc.doc.title);
             $("#details-box").find("textarea").val(doc.doc.message);
             $("#details-box").find("[name='name']").val(doc.doc.username);
             $("#likes-count").find("span").text(formatLikes(doc.doc.likes));
             $("#details-box").addClass("preview");
         } else {
-            $("card-opener").hide();
+            $("#card-opener").hide();
         }
     });
 }
