@@ -307,12 +307,16 @@ const copyToClipboard = (text) => {
         alert(message);
         if (successful) {
             if (navigator.share) {
-                navigator.share({
-                    title: "හස්න | පිඹුරුවැල්ලේගම ශ්‍රී සුමංගල දහම් පාසල",
-                    url: text
-                }).then(() => {
+                try {
+                    navigator.share({
+                        title: "හස්න | පිඹුරුවැල්ලේගම ශ්‍රී සුමංගල දහම් පාසල",
+                        url: text
+                    }).then(() => {
+                        window.location.reload();
+                    })
+                } catch (e) {
                     window.location.reload();
-                })
+                }
             } else {
                 window.location.reload();
             }
