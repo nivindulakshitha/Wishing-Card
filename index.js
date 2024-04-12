@@ -306,12 +306,15 @@ const copyToClipboard = (text) => {
         var message = successful ? 'යොමුව පිටපත් කෙරුණි. එය හිත මිතුරන් අතරේ බෙදා හරින්න' : 'යොමුව පිටපත් කිරීමට අසමත් විය. පහතින් ලබා දී ඇති "යොමුව පිටපත් කරගන්න" මගින් නැවත පිටපත් කිරීමට උත්සහ කරන්න.';
         alert(message);
         if (successful) {
-            window.location.reload();
             if (navigator.share) {
                 navigator.share({
                     title: "හස්න | පිඹුරුවැල්ලේගම ශ්‍රී සුමංගල දහම් පාසල",
-                    text: text
+                    url: text
+                }).then(() => {
+                    window.location.reload();
                 })
+            } else {
+                window.location.reload();
             }
         }
     } catch (error) {
